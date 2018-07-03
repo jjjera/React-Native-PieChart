@@ -9,11 +9,12 @@ class YAxis extends PureComponent {
 
     state = {
         height: 0,
+        width: 0,
     }
 
     _onLayout(event) {
-        const { nativeEvent: { layout: { height } } } = event
-        this.setState({ height })
+        const { nativeEvent: { layout: { height,width } } } = event
+        this.setState({ height, width })
     }
 
     getY(domain) {
@@ -34,9 +35,6 @@ class YAxis extends PureComponent {
             .range([ height - bottom, top ])
 
         if (scale === d3Scale.scaleBand) {
-
-            // use index as domain identifier instead of value since
-            // same value can occur at several places in dataPoints
             y
                 // set range top to bottom - we are not sorting on values in scaleBand
                 .range([ top, height - bottom ])
@@ -64,7 +62,7 @@ class YAxis extends PureComponent {
             svg,
         } = this.props
 
-        const { height } = this.state
+        const { height, width } = this.state
 
         if (data.length === 0) {
             return <View style={ style }/>
